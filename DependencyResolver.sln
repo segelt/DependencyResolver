@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31402.337
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyResolver", "DependencyResolver\DependencyResolver.csproj", "{6FE79E1C-46BD-4B20-A2A6-84CF3611F630}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyResolverTests", "DependencyResolverTests\DependencyResolverTests.csproj", "{193E5017-A592-45FA-A604-1FB7FE963ACE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FE79E1C-46BD-4B20-A2A6-84CF3611F630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE79E1C-46BD-4B20-A2A6-84CF3611F630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE79E1C-46BD-4B20-A2A6-84CF3611F630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE79E1C-46BD-4B20-A2A6-84CF3611F630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{193E5017-A592-45FA-A604-1FB7FE963ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{193E5017-A592-45FA-A604-1FB7FE963ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{193E5017-A592-45FA-A604-1FB7FE963ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{193E5017-A592-45FA-A604-1FB7FE963ACE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {314CEA6E-1E06-4628-92EE-B8AF32DC2B8E}
+	EndGlobalSection
+EndGlobal
