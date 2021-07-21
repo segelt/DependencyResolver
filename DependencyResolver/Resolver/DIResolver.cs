@@ -15,32 +15,42 @@ namespace DependencyResolver.Resolver
             _container = new DIContainer();
         }
 
-        public TService GetService<TService>()
+        public object GetService(Type serviceType)
         {
-            if (_container.registries.TryGetValue(typeof(TService), out ServiceEntity value))
+            if (_container.registries.TryGetValue(serviceType, out ServiceEntity value))
             {
-                if(value.Lifetime == ServiceLifetime.Transient)
-                {
-                    TService implementation = (TService)Activator.CreateInstance(value.Type);
-                    return implementation;
+                if(value.Lifetime == ServiceLifetime.Singleton && value.Implementation != null) {
+                    return value.Implementation;
                 }
-                else //This is a singleton instance
-                {
-                    if (value.Implementation == null)
-                    {
-                        TService implementation = (TService)Activator.CreateInstance(value.Type);
-                        value.Implementation = implementation;
 
-                        return implementation;
-                    }
-                    else
-                    {
-                        return (TService)value.Implementation;
-                    }
+                Type targetType = serviceType;
+
+                if (serviceType.IsAbstract || serviceType.IsInterface)
+                {
+                    targetType = value.Type;
                 }
+
+                var constructorInfo = targetType.GetConstructors().First();
+
+                var parameters = constructorInfo.GetParameters()
+                    .Select(x => GetService(x.ParameterType)).ToArray();
+
+                var implementation = Activator.CreateInstance(value.Type, parameters);
+
+                if(value.Lifetime == ServiceLifetime.Singleton)
+                {
+                    value.Implementation = implementation;
+                }
+
+                return implementation;
             }
 
             throw new Exception("Service does not exist");
+        }
+
+        public TService GetService<TService>()
+        {
+            return (TService)GetService(typeof(TService));
         }
 
         #region Singleton
@@ -52,7 +62,7 @@ namespace DependencyResolver.Resolver
             }
         }
 
-        public void RegisterSingleton<TService, TImplementation>()
+        public void RegisterSingleton<TService, TImplementation>() where TImplementation: TService
         {
             if (!_container.CheckIfImplementationExists<TService>())
             {
@@ -79,7 +89,7 @@ namespace DependencyResolver.Resolver
             }
         }
 
-        public void RegisterTransient<TService, TImplementation>()
+        public void RegisterTransient<TService, TImplementation>() where TImplementation : TService
         {
             if (!_container.CheckIfImplementationExists<TService>())
             {
