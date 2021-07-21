@@ -21,6 +21,7 @@ namespace DependencyResolver.Resolver
 
             if (_isInterface)
             {
+                //todo - check this query
                 return registries.Keys
                     .Any(p => typeof(TService).IsAssignableFrom(p));
             }

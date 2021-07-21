@@ -19,17 +19,24 @@ namespace DependencyResolver.Resolver
         {
             if (_container.registries.TryGetValue(typeof(TService), out ServiceEntity value))
             {
-
-                if (value.Implementation == null)
+                if(value.Lifetime == ServiceLifetime.Transient)
                 {
                     TService implementation = (TService)Activator.CreateInstance(value.Type);
-                    value.Implementation = implementation;
-
                     return implementation;
                 }
-                else
+                else //This is a singleton instance
                 {
-                    return (TService)value.Implementation;
+                    if (value.Implementation == null)
+                    {
+                        TService implementation = (TService)Activator.CreateInstance(value.Type);
+                        value.Implementation = implementation;
+
+                        return implementation;
+                    }
+                    else
+                    {
+                        return (TService)value.Implementation;
+                    }
                 }
             }
 
@@ -47,7 +54,10 @@ namespace DependencyResolver.Resolver
 
         public void RegisterSingleton<TService, TImplementation>()
         {
-            throw new NotImplementedException();
+            if (!_container.CheckIfImplementationExists<TService>())
+            {
+                _container.registries.Add(typeof(TService), new ServiceEntity(typeof(TImplementation), ServiceLifetime.Singleton));
+            }
         }
 
         public void RegisterSingleton<TService>(TService implementation)
@@ -60,37 +70,29 @@ namespace DependencyResolver.Resolver
         }
         #endregion
 
-        #region Scoped
-        public void RegisterScoped<T>()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RegisterScoped<TService, TImplementation>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RegisterScoped<TService>(TService implementation)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
         #region Transient
-        public void RegisterTransient<T>()
+        public void RegisterTransient<TService>()
         {
-            throw new System.NotImplementedException();
+            if (!_container.CheckIfImplementationExists<TService>())
+            {
+                _container.registries.Add(typeof(TService), new ServiceEntity(typeof(TService), ServiceLifetime.Transient));
+            }
         }
 
         public void RegisterTransient<TService, TImplementation>()
         {
-            throw new NotImplementedException();
+            if (!_container.CheckIfImplementationExists<TService>())
+            {
+                _container.registries.Add(typeof(TService), new ServiceEntity(typeof(TImplementation), ServiceLifetime.Transient));
+            }
         }
 
         public void RegisterTransient<TService>(TService implementation)
         {
-            throw new NotImplementedException();
+            if (!_container.CheckIfImplementationExists<TService>())
+            {
+                _container.registries.Add(typeof(TService), new ServiceEntity(implementation, ServiceLifetime.Transient));
+            }
         } 
         #endregion
     }

@@ -8,7 +8,7 @@ namespace DependencyResolver.Resolver
 {
     public class ServiceEntity
     {
-        public Type Type { get; set; }
+        public Type Type { get; set; } //Can hold both interface and class
 
         public object Implementation { get; internal set; }
 

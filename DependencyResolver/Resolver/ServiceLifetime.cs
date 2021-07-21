@@ -10,6 +10,6 @@ namespace DependencyResolver.Resolver
     {
         Singleton,
         Transient,
-        Scoped
+        //Scoped
     }
 }
