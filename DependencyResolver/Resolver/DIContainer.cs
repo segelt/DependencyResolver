@@ -17,19 +17,9 @@ namespace DependencyResolver.Resolver
 
         public bool CheckIfImplementationExists<TService>()
         {
-            bool _isInterface = typeof(TService).IsInterface;
-
-            if (_isInterface)
-            {
-                //todo - check this query
-                return registries.Keys
-                    .Any(p => typeof(TService).IsAssignableFrom(p));
-            }
-            else
-            {
-                return registries.Keys
-                    .Any(p => typeof(TService) == p);
-            }
+            //Interfaces should be included even if some key already implements them.
+            return registries.Keys
+                .Any(p => typeof(TService) == p);
         }
     }
 }

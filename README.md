@@ -1,2 +1,2 @@
 # DependencyResolver
- implementation of an dependency injection container with c#
+ implementation of a dependency injection container with c#

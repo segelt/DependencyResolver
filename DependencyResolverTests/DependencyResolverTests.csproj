@@ -54,6 +54,7 @@
     <Compile Include="TestClasses\Contract\IGenerator.cs" />
     <Compile Include="TestClasses\Implementation\DatetimeGenerator.cs" />
     <Compile Include="TestClasses\Implementation\GuidGenerator.cs" />
+    <Compile Include="AdditionalTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
